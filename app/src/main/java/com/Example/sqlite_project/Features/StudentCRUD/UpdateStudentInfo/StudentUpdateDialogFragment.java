@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Features.StudentCRUD.CreateStudent.Student;
 import com.Example.sqlite_project.Util.Config;
 import com.hellohasan.sqlite_project.R;
@@ -35,7 +35,7 @@ public class StudentUpdateDialogFragment extends DialogFragment {
     private String phoneString = "";
     private String emailString = "";
 
-    private DatabaseQueryClass databaseQueryClass;
+    private DatabaseDAO databaseDAO;
 
     public StudentUpdateDialogFragment() {
         // Required empty public constructor
@@ -62,7 +62,7 @@ public class StudentUpdateDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_student_update_dialog, container, false);
 
-        databaseQueryClass = new DatabaseQueryClass(getContext());
+        databaseDAO = new DatabaseDAO(getContext());
 
         nameEditText = view.findViewById(R.id.studentNameEditText);
         registrationEditText = view.findViewById(R.id.registrationEditText);
@@ -74,7 +74,7 @@ public class StudentUpdateDialogFragment extends DialogFragment {
         String title = getArguments().getString(Config.TITLE);
         getDialog().setTitle(title);
 
-        mStudent = databaseQueryClass.getStudentByRegNum(studentRegNo);
+        mStudent = databaseDAO.getStudentByRegNum(studentRegNo);
 
         if(mStudent!=null){
             nameEditText.setText(mStudent.getName());
@@ -95,7 +95,7 @@ public class StudentUpdateDialogFragment extends DialogFragment {
                     mStudent.setPhoneNumber(phoneString);
                     mStudent.setEmail(emailString);
 
-                    long id = databaseQueryClass.updateStudentInfo(mStudent);
+                    long id = databaseDAO.updateStudentInfo(mStudent);
 
                     if(id>0){
                         studentUpdateListener.onStudentInfoUpdated(mStudent, studentItemPosition);

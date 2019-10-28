@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Features.SubjectCRUD.CreateSubject.Subject;
 import com.Example.sqlite_project.Features.SubjectCRUD.CreateSubject.SubjectCreateDialogFragment;
 import com.Example.sqlite_project.Features.SubjectCRUD.CreateSubject.SubjectCreateListener;
@@ -28,7 +28,7 @@ public class SubjectListActivity extends AppCompatActivity implements SubjectCre
 
     private long studentRegNo;
 
-    private DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(this);
+    private DatabaseDAO databaseDAO = new DatabaseDAO(this);
 
     private List<Subject> subjectList = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class SubjectListActivity extends AppCompatActivity implements SubjectCre
 
         studentRegNo = getIntent().getLongExtra(Config.STUDENT_REGISTRATION, -1);
 
-        subjectList.addAll(databaseQueryClass.getAllSubjectsByRegNo(studentRegNo));
+        subjectList.addAll(databaseDAO.getAllSubjectsByRegNo(studentRegNo));
 
         subjectListRecyclerViewAdapter = new SubjectListRecyclerViewAdapter(this, subjectList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -69,8 +69,8 @@ public class SubjectListActivity extends AppCompatActivity implements SubjectCre
     }
 
     private void printSummary() {
-        long studentNum = databaseQueryClass.getNumberOfStudent();
-        long subjectNum = databaseQueryClass.getNumberOfSubject();
+        long studentNum = databaseDAO.getNumberOfStudent();
+        long subjectNum = databaseDAO.getNumberOfSubject();
 
         summaryTextView.setText(getResources().getString(R.string.database_summary, studentNum, subjectNum));
     }
@@ -109,7 +109,7 @@ public class SubjectListActivity extends AppCompatActivity implements SubjectCre
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                boolean isAllDeleted = databaseQueryClass.deleteAllSubjectsByRegNum(studentRegNo);
+                                boolean isAllDeleted = databaseDAO.deleteAllSubjectsByRegNum(studentRegNo);
                                 if(isAllDeleted){
                                     subjectList.clear();
                                     subjectListRecyclerViewAdapter.notifyDataSetChanged();

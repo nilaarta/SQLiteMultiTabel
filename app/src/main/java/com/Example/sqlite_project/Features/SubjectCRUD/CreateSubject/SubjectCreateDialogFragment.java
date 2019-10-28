@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.hellohasan.sqlite_project.R;
 
 
@@ -61,9 +61,9 @@ public class SubjectCreateDialogFragment extends DialogFragment {
 
                 Subject subject = new Subject(-1, subjectName, subjectCode, subjectCredit);
 
-                DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
+                DatabaseDAO databaseDAO = new DatabaseDAO(getContext());
 
-                long id = databaseQueryClass.insertSubject(subject, studentRegistrationNumber);
+                long id = databaseDAO.insertSubject(subject, studentRegistrationNumber);
 
                 if(id>0){
                     subject.setId(id);

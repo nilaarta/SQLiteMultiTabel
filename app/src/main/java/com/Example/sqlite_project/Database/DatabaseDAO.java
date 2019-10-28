@@ -19,11 +19,11 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class DatabaseQueryClass {
+public class DatabaseDAO {
 
     private Context context;
 
-    public DatabaseQueryClass(Context context){
+    public DatabaseDAO(Context context){
         this.context = context;
         Logger.addLogAdapter(new AndroidLogAdapter());
     }

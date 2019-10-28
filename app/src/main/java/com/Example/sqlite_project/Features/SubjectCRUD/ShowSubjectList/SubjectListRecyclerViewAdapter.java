@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Features.SubjectCRUD.CreateSubject.Subject;
 import com.Example.sqlite_project.Features.SubjectCRUD.UpdateSubjectInfo.SubjectUpdateDialogFragment;
 import com.Example.sqlite_project.Util.Config;
@@ -88,8 +88,8 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
     }
 
     private void deleteSubject(Subject subject) {
-        DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(context);
-        boolean isDeleted = databaseQueryClass.deleteSubjectById(subject.getId());
+        DatabaseDAO databaseDAO = new DatabaseDAO(context);
+        boolean isDeleted = databaseDAO.deleteSubjectById(subject.getId());
 
         if(isDeleted) {
             subjectList.remove(subject);

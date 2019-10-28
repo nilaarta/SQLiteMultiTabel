@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Util.Config;
 import com.hellohasan.sqlite_project.R;
 
@@ -73,9 +73,9 @@ public class StudentCreateDialogFragment extends DialogFragment {
 
                 Student student = new Student(-1, nameString, registrationNumber, phoneString, emailString);
 
-                DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
+                DatabaseDAO databaseDAO = new DatabaseDAO(getContext());
 
-                long id = databaseQueryClass.insertStudent(student);
+                long id = databaseDAO.insertStudent(student);
 
                 if(id>0){
                     student.setId(id);

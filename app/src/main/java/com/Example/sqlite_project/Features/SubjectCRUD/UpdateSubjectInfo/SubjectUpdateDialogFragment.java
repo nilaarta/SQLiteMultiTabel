@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.Example.sqlite_project.Features.SubjectCRUD.CreateSubject.Subject;
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.hellohasan.sqlite_project.R;
 import com.Example.sqlite_project.Util.Config;
 
@@ -27,7 +27,7 @@ public class SubjectUpdateDialogFragment extends DialogFragment {
     private static long subjectId;
     private static int position;
 
-    private DatabaseQueryClass databaseQueryClass;
+    private DatabaseDAO databaseDAO;
 
     public SubjectUpdateDialogFragment() {
         // Required empty public constructor
@@ -59,12 +59,12 @@ public class SubjectUpdateDialogFragment extends DialogFragment {
         updateButton = view.findViewById(R.id.updateButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
-        databaseQueryClass = new DatabaseQueryClass(getContext());
+        databaseDAO = new DatabaseDAO(getContext());
 
         String title = getArguments().getString(Config.TITLE);
         getDialog().setTitle(title);
 
-        Subject subject = databaseQueryClass.getSubjectById(subjectId);
+        Subject subject = databaseDAO.getSubjectById(subjectId);
 
         subjectNameEditText.setText(subject.getName());
         subjectCodeEditText.setText(String.valueOf(subject.getCode()));
@@ -79,7 +79,7 @@ public class SubjectUpdateDialogFragment extends DialogFragment {
 
                 Subject subject = new Subject(subjectId, subjectName, subjectCode, subjectCredit);
 
-                long rowCount = databaseQueryClass.updateSubjectInfo(subject);
+                long rowCount = databaseDAO.updateSubjectInfo(subject);
 
                 if(rowCount>0){
                     subjectUpdateListener.onSubjectInfoUpdate(subject, position);

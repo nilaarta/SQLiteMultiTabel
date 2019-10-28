@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Features.StudentCRUD.CreateStudent.Student;
 import com.Example.sqlite_project.Features.StudentCRUD.CreateStudent.StudentCreateDialogFragment;
 import com.Example.sqlite_project.Features.StudentCRUD.CreateStudent.StudentCreateListener;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class StudentListActivity extends AppCompatActivity implements StudentCreateListener {
 
-    private DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(this);
+    private DatabaseDAO databaseDAO = new DatabaseDAO(this);
 
     private List<Student> studentList = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class StudentListActivity extends AppCompatActivity implements StudentCre
         summaryTextView = findViewById(R.id.summaryTextView);
         studentListEmptyTextView = findViewById(R.id.emptyListTextView);
 
-        studentList.addAll(databaseQueryClass.getAllStudent());
+        studentList.addAll(databaseDAO.getAllStudent());
 
         studentListRecyclerViewAdapter = new StudentListRecyclerViewAdapter(this, studentList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -91,7 +91,7 @@ public class StudentListActivity extends AppCompatActivity implements StudentCre
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
-                            boolean isAllDeleted = databaseQueryClass.deleteAllStudents();
+                            boolean isAllDeleted = databaseDAO.deleteAllStudents();
                             if(isAllDeleted){
                                 studentList.clear();
                                 studentListRecyclerViewAdapter.notifyDataSetChanged();
@@ -128,8 +128,8 @@ public class StudentListActivity extends AppCompatActivity implements StudentCre
     }
 
     private void printSummary() {
-        long studentNum = databaseQueryClass.getNumberOfStudent();
-        long subjectNum = databaseQueryClass.getNumberOfSubject();
+        long studentNum = databaseDAO.getNumberOfStudent();
+        long subjectNum = databaseDAO.getNumberOfSubject();
 
         summaryTextView.setText(getResources().getString(R.string.database_summary, studentNum, subjectNum));
     }

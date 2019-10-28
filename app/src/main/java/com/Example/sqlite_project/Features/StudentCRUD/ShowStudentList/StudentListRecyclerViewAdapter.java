@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.Example.sqlite_project.Database.DatabaseQueryClass;
+import com.Example.sqlite_project.Database.DatabaseDAO;
 import com.Example.sqlite_project.Features.StudentCRUD.CreateStudent.Student;
 import com.Example.sqlite_project.Features.StudentCRUD.UpdateStudentInfo.StudentUpdateDialogFragment;
 import com.Example.sqlite_project.Features.StudentCRUD.UpdateStudentInfo.StudentUpdateListener;
@@ -26,12 +26,12 @@ public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
 
     private Context context;
     private List<Student> studentList;
-    private DatabaseQueryClass databaseQueryClass;
+    private DatabaseDAO databaseDAO;
 
     public StudentListRecyclerViewAdapter(Context context, List<Student> studentList) {
         this.context = context;
         this.studentList = studentList;
-        databaseQueryClass = new DatabaseQueryClass(context);
+        databaseDAO = new DatabaseDAO(context);
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
@@ -102,7 +102,7 @@ public class StudentListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
 
     private void deleteStudent(int position) {
         Student student = studentList.get(position);
-        long count = databaseQueryClass.deleteStudentByRegNum(student.getRegistrationNumber());
+        long count = databaseDAO.deleteStudentByRegNum(student.getRegistrationNumber());
 
         if(count>0){
             studentList.remove(position);
